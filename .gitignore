@@ -1,0 +1,6 @@
+composer.phar
+composer.lock
+/vendor/
+/.idea/
+.phpunit.result.cache
+[tT][oO][dD][oO]*

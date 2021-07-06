@@ -1,0 +1,31 @@
+{
+    "name": "earc/functional-attributes",
+    "description": "eArc - the explicit architecture framework - functional attributes component",
+    "type": "library",
+    "license": "MIT",
+    "version": "dev-0.0",
+    "authors": [
+        {
+            "name": "Thomas Koudela",
+            "email": "thomas@koudela.net"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "earc/di": "^3.1"
+    },
+    "autoload": {
+        "psr-4" : {
+            "eArc\\FunctionalAttributes\\" : "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "symfony/var-dumper": "^5.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "eArc\\FunctionalAttributesTests\\" : "tests/"
+        }
+    }
+}
