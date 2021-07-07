@@ -18,12 +18,16 @@ use ReflectionProperty;
 
 class EvaluationService
 {
+    public function __construct(
+        protected string $attributeClass = Functional::class
+    ) {}
+
     /**
      * @throws MissingCallableException
      */
-    public function evaluateProperty(ReflectionProperty $property): bool|null
+    public function evaluateProperty(ReflectionProperty $property): array|bool|null
     {
-        $attributes = $property->getAttributes(Functional::class);
+        $attributes = $property->getAttributes($this->attributeClass);
         $attribute = array_pop($attributes);
 
         if ($attribute instanceof ReflectionAttribute) {
@@ -42,6 +46,6 @@ class EvaluationService
      */
     public function evaluateValue(mixed $value, iterable $callTree, string|null $fallbackFQCN): bool
     {
-        return (new Functional($callTree, $fallbackFQCN))->evaluate($value);
+        return (new ($this->attributeClass)($callTree, $fallbackFQCN))->evaluate($value);
     }
 }

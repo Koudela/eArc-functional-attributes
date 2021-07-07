@@ -16,14 +16,9 @@ use eArc\DI\Exceptions\MakeClassException;
 use eArc\FunctionalAttributes\Exceptions\MissingCallableException;
 use eArc\FunctionalAttributes\Interfaces\ServiceInterface;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
+#[Attribute]
 class Functional extends F
 {
-    #[Functional([
-        F::NOT => [F::OR => []],
-    ], ValidatorFactory::class)]
-    protected mixed $testCase;
-
     protected object|null $fallback = null;
     protected mixed $appliedArgument;
 
@@ -101,9 +96,11 @@ class Functional extends F
     {
         if (method_exists($className, $methodName)) {
             try {
-                return is_array($args) ? di_get($className)->$methodName(...$args) : di_get($className)->$methodName($args);
+                return is_array($args) ? di_get($className)->$methodName($this->appliedArgument, ...$args)
+                    : di_get($className)->$methodName($this->appliedArgument, $args);
             } catch (MakeClassException) {
-                return is_array($args) ? di_static($className)::$methodName(...$args) : di_static($className)::$methodName($args);
+                return is_array($args) ? di_static($className)::$methodName($this->appliedArgument, ...$args)
+                    : di_static($className)::$methodName($this->appliedArgument, $args);
             }
         }
 
